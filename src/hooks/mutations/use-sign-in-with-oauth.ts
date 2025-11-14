@@ -4,5 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 export function useSignInWithOAuth() {
   return useMutation({
     mutationFn: signInWithOAuth,
+    onError: (error) => {
+      console.error(error);
+    },
   });
 }
