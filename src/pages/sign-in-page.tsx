@@ -16,35 +16,17 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
 
   const { mutate: signInWithPassword, isPending: isSignInWithPasswordPending } =
-    useSignInWithPassword();
+    useSignInWithPassword({
+      onError: (error) => {
+        const message = generateAuthErrorMessage(error);
+        toast.error(message, {
+          position: "top-center",
+        });
+        setPassword("");
+      },
+    });
   const { mutate: signInWithOAuth, isPending: isSignInWithOAuthPending } =
-    useSignInWithOAuth();
-
-  const handleSignInWithPasswordClick = () => {
-    if (email.trim() === "") return;
-    if (password.trim() === "") return;
-
-    signInWithPassword(
-      {
-        email,
-        password,
-      },
-      {
-        onError: (error) => {
-          const message = generateAuthErrorMessage(error);
-          toast.error(message, {
-            position: "top-center",
-          });
-          setPassword("");
-        },
-      },
-    );
-  };
-
-  const isPending = isSignInWithPasswordPending || isSignInWithOAuthPending;
-
-  const handleSignInWithGitHubClick = () => {
-    signInWithOAuth("github", {
+    useSignInWithOAuth({
       onError: (error) => {
         const message = generateAuthErrorMessage(error);
         toast.error(message, {
@@ -52,6 +34,21 @@ export default function SignInPage() {
         });
       },
     });
+
+  const handleSignInWithPasswordClick = () => {
+    if (email.trim() === "") return;
+    if (password.trim() === "") return;
+
+    signInWithPassword({
+      email,
+      password,
+    });
+  };
+
+  const isPending = isSignInWithPasswordPending || isSignInWithOAuthPending;
+
+  const handleSignInWithGitHubClick = () => {
+    signInWithOAuth("github");
   };
 
   return (
