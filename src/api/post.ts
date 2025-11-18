@@ -2,18 +2,18 @@ import supabase from "@/lib/supabase";
 import { uploadImage } from "./image";
 import type { PostEntity } from "@/types";
 
-export async function createPost(content: string) {
-  const { data, error } = await supabase
-    .from("post")
-    .insert({
-      content,
-    })
-    .select()
-    .single();
+// export async function createPost(content: string) {
+//   const { data, error } = await supabase
+//     .from("post")
+//     .insert({
+//       content,
+//     })
+//     .select()
+//     .single();
 
-  if (error) throw error;
-  return data;
-}
+//   if (error) throw error;
+//   return data;
+// }
 
 export async function deletePost(id: number) {
   const { data, error } = await supabase
