@@ -2,6 +2,18 @@ import supabase from "@/lib/supabase";
 import { uploadImage } from "./image";
 import type { PostEntity } from "@/types";
 
+export async function fetchPosts() {
+  // 포스트, 프로필 테이블을 조인
+  const { data, error } = await supabase
+    .from("post")
+    // 프로필 테이블에서 author_id와 일치하는 모든 행을 author라는 이름으로 조회
+    .select("*, author: profile!author_id (*)")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
 export async function createPost(content: string) {
   const { data, error } = await supabase
     .from("post")
