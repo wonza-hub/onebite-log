@@ -49,12 +49,12 @@ export default function PostEditorModal() {
 
   useEffect(() => {
     // 메모리 누수 방지
-    // if (!isOpen) {
-    //   images.forEach((image) => {
-    //     URL.revokeObjectURL(image.previewUrl);
-    //   });
-    //   return;
-    // }
+    if (!isOpen) {
+      images.forEach((image) => {
+        URL.revokeObjectURL(image.previewUrl);
+      });
+      return;
+    }
     textareaRef.current?.focus();
     setContent("");
     setImages([]);
@@ -105,7 +105,7 @@ export default function PostEditorModal() {
     );
 
     // 메모리 누수 방지
-    // URL.revokeObjectURL(image.previewUrl);
+    URL.revokeObjectURL(image.previewUrl);
   };
 
   return (
