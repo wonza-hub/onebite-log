@@ -1,22 +1,34 @@
 import Fallback from "@/components/fallback";
 import Loader from "@/components/loader";
 import PostItem from "@/components/post/post-item";
-import { usePostsData } from "@/hooks/queries/use-posts-data";
+import { useInfinitePostsData } from "@/hooks/queries/use-infinite-posts-data";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 /**
  * COMPONENT: 피드 형태의 포스트
  */
 export default function PostFeed() {
-  const { data, error, isPending } = usePostsData();
+  const { data, error, isPending, fetchNextPage, isFetchingNextPage } =
+    useInfinitePostsData();
+  const { ref: bottomRef, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   if (error) return <Fallback />;
   if (isPending) return <Loader />;
 
   return (
     <div className="flex flex-col gap-10">
-      {data.map((post) => (
-        <PostItem key={post.id} {...post} />
-      ))}
+      {data.pages.map((page) =>
+        page.map((post) => <PostItem key={post.id} {...post} />),
+      )}
+      {isFetchingNextPage && <Loader />}
+      <div ref={bottomRef}></div>
     </div>
   );
 }
