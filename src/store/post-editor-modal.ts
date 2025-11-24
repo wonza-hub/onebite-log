@@ -4,11 +4,11 @@ import { combine, devtools } from "zustand/middleware";
 /**
  * STORE: 포스트 작성 모달 전역 상태
  */
-type TCreateMode = {
+type CreateMode = {
   isOpen: true;
   type: "CREATE";
 };
-type TEditMode = {
+type EditMode = {
   isOpen: true;
   type: "EDIT";
   postId: number;
@@ -16,15 +16,15 @@ type TEditMode = {
   imageUrls: string[] | null;
 };
 
-type TOpenState = TCreateMode | TEditMode;
-type TCloseState = {
+type OpenState = CreateMode | EditMode;
+type CloseState = {
   isOpen: false;
 };
 
-type TState = TCloseState | TOpenState;
+type State = CloseState | OpenState;
 const initialState = {
   isOpen: false,
-} as TState;
+} as State;
 const usePostEditorModalStore = create(
   devtools(
     combine(initialState, (set) => ({
@@ -34,7 +34,7 @@ const usePostEditorModalStore = create(
           set({ isOpen: true, type: "CREATE" });
         },
         // 포스트 수정 시
-        openEdit: (param: Omit<TEditMode, "isOpen" | "type">) => {
+        openEdit: (param: Omit<EditMode, "isOpen" | "type">) => {
           set({ isOpen: true, type: "EDIT", ...param });
         },
         close: () => {
@@ -62,5 +62,5 @@ export const usePostEditorModal = () => {
   const store = usePostEditorModalStore();
   // return store
   // cf) 유니온 타입 TState에 대한 타입스크립트의 잘못된 추론을 방지
-  return store as typeof store & TState;
+  return store as typeof store & State;
 };
