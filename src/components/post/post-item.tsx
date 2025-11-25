@@ -4,18 +4,29 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { HeartIcon, MessageCircle } from "lucide-react";
+import { HeartIcon, Loader, MessageCircle } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.jpg";
 import { formatTimeAgo } from "@/lib/time";
 import EditPostButton from "./edit-post-button";
 import DeletePostButton from "./delete-post-button";
 import { useSession } from "@/store/session";
+import { usePostByIdData } from "@/hooks/queries/use-post-by-id-data";
+import Fallback from "../fallback";
 
 /**
- * COMPONENT: 포스트 단건
+ * COMPONENT: 포스트 목록에서 표시되는 단건
  */
-export default function PostItem(post: TPost) {
+export default function PostItem({ postId }: { postId: number }) {
   const session = useSession();
+  const {
+    data: post,
+    isPending,
+    error,
+  } = usePostByIdData({ postId, type: "FEED" });
+
+  if (isPending) return <Loader />;
+  if (error) return <Fallback />;
+
   const isMyPost = session?.user.id === post.author.id;
 
   return (
