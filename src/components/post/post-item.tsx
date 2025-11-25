@@ -1,5 +1,4 @@
 import type { TPost } from "@/types";
-import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -9,6 +8,7 @@ import { HeartIcon, MessageCircle } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.jpg";
 import { formatTimeAgo } from "@/lib/time";
 import EditPostButton from "./edit-post-button";
+import DeletePostButton from "./delete-post-button";
 
 /**
  * COMPONENT: 포스트 단건
@@ -38,9 +38,7 @@ export default function PostItem(post: TPost) {
         {/* 1-2. 수정/삭제 버튼 */}
         <div className="text-muted-foreground flex text-sm">
           <EditPostButton {...post} />
-          <Button className="cursor-pointer" variant={"ghost"}>
-            삭제
-          </Button>
+          <DeletePostButton id={post.id} />
         </div>
       </div>
 
