@@ -5,7 +5,7 @@ import { useOpenEditPostModal } from "@/store/post-editor-modal";
 /**
  * COMPONENT: 포스트 수정 시도 버튼
  */
-export default function EditPostItemButton(props: TPost) {
+export default function EditPostButton(props: TPost) {
   const { id, content, image_urls } = props;
 
   const openEditPostModal = useOpenEditPostModal();
