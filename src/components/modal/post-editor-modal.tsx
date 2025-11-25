@@ -185,6 +185,27 @@ export default function PostEditorModal() {
           </Carousel>
         )}
 
+        {images.length > 0 && (
+          <Carousel>
+            <CarouselContent>
+              {images.map((image) => (
+                <CarouselItem className="basis-2/5" key={image.previewUrl}>
+                  <div className="relative">
+                    <img
+                      src={image.previewUrl}
+                      className="h-full w-full rounded-sm object-cover"
+                    />
+                    <div
+                      onClick={() => handleDeleteImage(image)}
+                      className="absolute top-0 right-0 m-1 cursor-pointer rounded-full bg-black/30 p-1"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        )}
+
         {postEditorModal.isOpen && postEditorModal.type === "CREATE" && (
           <Button
             className="cursor-pointer"
