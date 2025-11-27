@@ -1,10 +1,9 @@
-import type { TPost } from "@/types";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { HeartIcon, Loader, MessageCircle } from "lucide-react";
+import { Loader, MessageCircle } from "lucide-react";
 import defaultAvatar from "@/assets/default-avatar.jpg";
 import { formatTimeAgo } from "@/lib/time";
 import EditPostButton from "./edit-post-button";
@@ -12,6 +11,7 @@ import DeletePostButton from "./delete-post-button";
 import { useSession } from "@/store/session";
 import { usePostByIdData } from "@/hooks/queries/use-post-by-id-data";
 import Fallback from "../fallback";
+import LikePostButton from "./like-post-button";
 
 /**
  * COMPONENT: 포스트 목록에서 표시되는 단건
@@ -88,10 +88,7 @@ export default function PostItem({ postId }: { postId: number }) {
       {/* 3. 좋아요, 댓글 버튼 */}
       <div className="flex gap-2">
         {/* 3-1. 좋아요 버튼 */}
-        <div className="hover:bg-muted flex cursor-pointer items-center gap-2 rounded-xl border-1 p-2 px-4 text-sm">
-          <HeartIcon className="h-4 w-4" />
-          <span>0</span>
-        </div>
+        <LikePostButton id={post.id} likeCount={post.like_count} />
 
         {/* 3-2. 댓글 버튼 */}
         <div className="hover:bg-muted flex cursor-pointer items-center gap-2 rounded-xl border-1 p-2 px-4 text-sm">
