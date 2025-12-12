@@ -12,7 +12,7 @@ export default function PostDetailPage() {
     <div>
       <PostItem postId={Number(postId)} type="DETAIL" />
       <div className="text-xl font-bold">댓글</div>
-      <CommentEditor />
+      <CommentEditor postId={Number(postId)} />
       <CommentList />
     </div>
   );
