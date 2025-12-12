@@ -14,6 +14,8 @@ export function useInfinitePostsData() {
       const from = pageParam * PAGE_SIZE;
       const to = from + PAGE_SIZE - 1;
       const posts = await fetchPosts({ from, to, userId: session!.user.id });
+      // 각 게시물에 대한 캐시 정규화를 수행
+      // 이후 피드에 나타난 목록은 캐시된 데이터를 사용하도록 설정
       posts.forEach((post) => {
         queryClient.setQueryData(QUERY_KEYS.post.byId(post.id), post);
       });
