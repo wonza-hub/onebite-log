@@ -1,3 +1,5 @@
+import CommentEditor from "@/components/comment/comment-editor";
+import CommentList from "@/components/comment/comment-list";
 import PostItem from "@/components/post/post-item";
 import { Navigate, useParams } from "react-router";
 
@@ -9,6 +11,9 @@ export default function PostDetailPage() {
   return (
     <div>
       <PostItem postId={Number(postId)} type="DETAIL" />
+      <div className="text-xl font-bold">댓글</div>
+      <CommentEditor />
+      <CommentList />
     </div>
   );
 }
