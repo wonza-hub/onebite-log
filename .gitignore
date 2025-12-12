@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.local
 .env.prod
+
+# MCP
+mcp.json
