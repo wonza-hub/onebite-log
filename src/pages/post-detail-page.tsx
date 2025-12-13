@@ -9,11 +9,11 @@ export default function PostDetailPage() {
   if (!postId) return <Navigate to={"/"} />;
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <PostItem postId={Number(postId)} type="DETAIL" />
       <div className="text-xl font-bold">댓글</div>
       <CommentEditor postId={Number(postId)} />
-      <CommentList />
+      <CommentList postId={Number(postId)} />
     </div>
   );
 }
